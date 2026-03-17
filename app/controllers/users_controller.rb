@@ -6,6 +6,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      Rails.logger.info "DEBUG USERNAME: #{ENV['GMAIL_USERNAME'].inspect}"
+      Rails.logger.info "DEBUG PASSWORD: #{ENV['GMAIL_PASSWORD'].inspect}"
       SendWelcomeEmailJob.perform_later(@user.id)
       # Log the user in right after signup
       session[:user_id] = @user.id
