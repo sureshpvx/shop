@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      SendWelcomeEmailJob.perform_later(@user.id)
       # Log the user in right after signup
       session[:user_id] = @user.id
       redirect_to root_path, notice: 'Account created successfully!'
