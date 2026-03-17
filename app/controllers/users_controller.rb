@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    Rails.logger.info "ALL ENV KEYS: #{ENV.keys.take(20)}"
     if @user.save
       Rails.logger.info "DEBUG USERNAME: #{ENV['GMAIL_USERNAME'].inspect}"
       Rails.logger.info "DEBUG PASSWORD: #{ENV['GMAIL_PASSWORD'].inspect}"
